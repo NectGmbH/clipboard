@@ -36,7 +36,7 @@ export const Clipboard = {
    * }
    * ```
    */
-  hasString() {
+  hasString(): Promise<string> {
     return NativeClipboard.hasString();
   },
 };

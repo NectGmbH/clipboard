@@ -61,11 +61,25 @@ public class ClipboardModule extends ContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void hasString(Promise promise) {
+  public void hasString(final Promise promise) {
     try {
-      ClipboardManager clipboard = getClipboardService();
-      ClipData clipData = clipboard.getPrimaryClip();
-      promise.resolve(clipData != null && clipData.getItemCount() >= 1);
+      final ClipboardManager clipboard = getClipboardService();
+      final ClipData clipData = clipboard.getPrimaryClip();
+
+      boolean hasString = false;
+
+      if (clipData != null) {
+        for (int i = 0; i < clipData.getItemCount(); i++) {
+          final ClipData.Item clipItem = clipData.getItemAt(i);
+
+          if (clipItem != null && clipItem.getText() != null && clipItem.getText().length() > 0) {
+            hasString = true;
+            break;
+          }
+        }
+      }
+
+      promise.resolve(hasString);
     } catch (Exception e) {
       promise.reject(e);
     }
