@@ -24,8 +24,23 @@ RCT_EXPORT_METHOD(setString:(NSString *)content)
 RCT_EXPORT_METHOD(getString:(RCTPromiseResolveBlock)resolve
                   reject:(__unused RCTPromiseRejectBlock)reject)
 {
-  UIPasteboard *clipboard = [UIPasteboard generalPasteboard];
-  resolve((clipboard.string ? : @""));
+//  if (@available(iOS 14.0, *)) {
+//    NSSet<UIPasteboardDetectionPattern> *detectionPatterns =
+//        [NSSet setWithArray:@[ UIPasteboardDetectionPatternProbableWebURL ]];
+//
+//    [[UIPasteboard generalPasteboard]
+//     detectValuesForPatterns:detectionPatterns completionHandler:^(NSDictionary<UIPasteboardDetectionPattern, id> * data, NSError * error) {
+//      if (data[UIPasteboardDetectionPatternProbableWebURL] != nil) {
+//        NSString *url = data[UIPasteboardDetectionPatternProbableWebURL];
+//
+//        resolve(url);
+//      }
+//    }];
+//
+//  } else {
+    UIPasteboard *clipboard = [UIPasteboard generalPasteboard];
+    resolve((clipboard.string ? : @""));
+//  }
 }
 
 RCT_EXPORT_METHOD(hasString:(RCTPromiseResolveBlock)resolve
